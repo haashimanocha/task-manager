@@ -1,26 +1,23 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-
-const path = require("path");
-
+// serve frontend files
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+// MAIN FRONTEND ROUTE (ONLY ONE)
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-
 let users = [];
 let tasks = [];
 
-app.get("/", (req, res) => {
-  res.send("Task Manager Backend Running 🚀");
-});
 // Signup
 app.post("/signup", (req, res) => {
   const { username, password } = req.body;
@@ -43,7 +40,7 @@ app.post("/login", (req, res) => {
   }
 });
 
-// Get tasks (only for logged user)
+// Get tasks
 app.get("/tasks", (req, res) => {
   const username = req.query.username;
   const userTasks = tasks.filter(t => t.username === username);
