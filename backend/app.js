@@ -8,6 +8,9 @@ app.use(express.json());
 let users = [];
 let tasks = [];
 
+app.get("/", (req, res) => {
+  res.send("Task Manager Backend Running 🚀");
+});
 // Signup
 app.post("/signup", (req, res) => {
   const { username, password } = req.body;
