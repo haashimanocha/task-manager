@@ -27,22 +27,42 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
-        steps {
-        sh '''
-        export PATH=$PATH:/opt/homebrew/bin:/usr/local/bin
-        docker build -t task-manager .
-        '''
+        stage('Code Quality (SonarCloud)') {
+            steps {
+                dir('backend') {
+                    withSonarQubeEnv('sonarcloud') {
+                        sh '''
+                        npm install -g sonar-scanner
+
+                        sonar-scanner \
+                          -Dsonar.projectKey=task-manager \
+                          -Dsonar.organization=haashimanocha \
+                          -Dsonar.host.url=https://sonarcloud.io \
+                          -Dsonar.login=819968b2249f18b5f593366d224bcaa2139bfc7c
+                        '''
+                    }
+                }
+            }
         }
+
+        stage('Docker Build') {
+            steps {
+                sh '''
+                export PATH=$PATH:/opt/homebrew/bin:/usr/local/bin
+                docker build -t task-manager .
+                '''
+            }
         }
 
         stage('Deploy') {
-        steps {
-        sh '''
-        export PATH=$PATH:/opt/homebrew/bin:/usr/local/bin
-        docker run -d -p 3000:3000 task-manager || true
-        '''
+            steps {
+                sh '''
+                export PATH=$PATH:/opt/homebrew/bin:/usr/local/bin
+                docker stop task-manager || true
+                docker rm task-manager || true
+                docker run -d -p 3000:3000 --name task-manager task-manager
+                '''
+            }
         }
-      }
     }
 }
