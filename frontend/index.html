@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>TaskFlow</h2>
+    <p id="welcome"></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- Auth Section -->
+    <div id="auth" class="card">
+      <h2>Welcome Back</h2>
+      <input id="username" placeholder="Username">
+      <input id="password" type="password" placeholder="Password">
+      <div class="btn-group">
+        <button onclick="login()">Login</button>
+        <button class="secondary" onclick="signup()">Signup</button>
+      </div>
+    </div>
+
+    <!-- Task App -->
+    <div id="app" style="display:none;">
+      
+      <div class="top-bar">
+        <h2>Your Tasks</h2>
+      </div>
+
+      <div class="task-box">
+        <input id="taskInput" placeholder="Add a new task...">
+        <button onclick="addTask()">Add</button>
+      </div>
+
+      <ul id="taskList"></ul>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
