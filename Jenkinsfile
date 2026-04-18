@@ -1,12 +1,20 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'nodejs'
+    }
+
     stages {
 
         stage('Build') {
             steps {
                 dir('backend') {
-                    sh 'npm install'
+                    sh '''
+                    node -v
+                    npm -v
+                    npm install
+                    '''
                 }
             }
         }
@@ -27,7 +35,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 3000:3000 task-manager'
+                sh 'docker run -d -p 3000:3000 task-manager || true'
             }
         }
     }
