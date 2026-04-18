@@ -28,15 +28,21 @@ pipeline {
         }
 
         stage('Docker Build') {
-            steps {
-                sh 'docker build -t task-manager .'
-            }
+        steps {
+        sh '''
+        export PATH=$PATH:/opt/homebrew/bin:/usr/local/bin
+        docker build -t task-manager .
+        '''
+        }
         }
 
         stage('Deploy') {
-            steps {
-                sh 'docker run -d -p 3000:3000 task-manager || true'
-            }
+        steps {
+        sh '''
+        export PATH=$PATH:/opt/homebrew/bin:/usr/local/bin
+        docker run -d -p 3000:3000 task-manager || true
+        '''
         }
+      }
     }
 }
