@@ -61,7 +61,4 @@ app.delete("/tasks/:id", (req, res) => {
   res.send("Deleted");
 });
 
-const PORT = 3000;
-if (require.main === module) {
-  app.listen(PORT, () => console.log("Server running on port 3000"));
-}
+module.exports = app;
