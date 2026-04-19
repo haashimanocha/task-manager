@@ -1,3 +1,5 @@
+
+
 FROM node:18
 
 WORKDIR /app
@@ -8,6 +10,8 @@ RUN cd backend && npm install
 COPY backend ./backend
 COPY frontend ./frontend
 
+WORKDIR /app/backend
+
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
